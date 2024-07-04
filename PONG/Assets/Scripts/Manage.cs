@@ -7,12 +7,30 @@ using Photon.Chat;
 
 public class Manage : MonoBehaviourPunCallbacks
 {
-    private void Start()
+
+    
+    public GameObject Player;
+
+
+
+    public static Manage Instance;
+
+    private void Awake()
     {
-       
-        PhotonNetwork.ConnectUsingSettings();
+        if (Instance == null)
+        {
+            Instance = this;
+        }
     }
 
+
+
+
+
+    private void Start()
+    {
+        PhotonNetwork.ConnectUsingSettings();
+    }
 
     public override void OnConnectedToMaster()
     {
@@ -20,53 +38,46 @@ public class Manage : MonoBehaviourPunCallbacks
         PhotonNetwork.JoinLobby();
     }
 
-
-
     public override void OnJoinedLobby()
     {
-
         Debug.Log("Lobiye Girildi");
-         PhotonNetwork.JoinOrCreateRoom("Oda", new RoomOptions { MaxPlayers = 2, IsOpen = true, IsVisible = true }, TypedLobby.Default);
-      //PhotonNetwork.JoinRandomRoom();
+        PhotonNetwork.JoinOrCreateRoom("Oda", new RoomOptions { MaxPlayers = 2, IsOpen = true, IsVisible = true }, TypedLobby.Default);
     }
-
 
     public override void OnJoinedRoom()
     {
         Debug.Log("Odaya girildi");
 
-        GameObject nesne = PhotonNetwork.Instantiate("Square", Vector3.zero, Quaternion.identity, 0, null);
+        GameObject Oyuncu = PhotonNetwork.Instantiate("Square", Vector3.zero, Quaternion.identity, 0, null);
+        Player = Oyuncu;
+
+
+
+     
     }
-    
+
     public override void OnLeftLobby()
     {
-
         Debug.Log("Lobiden Çýkýldý");
     }
-
 
     public override void OnLeftRoom()
     {
         Debug.Log("Odadan Çýkýldý");
     }
 
-
     public override void OnJoinRandomFailed(short returnCode, string message)
     {
         Debug.Log("Herhangi bir odaya girilmedi");
     }
-
 
     public override void OnJoinRoomFailed(short returnCode, string message)
     {
         Debug.Log("Odaya girilmedi");
     }
 
-
     public override void OnCreateRoomFailed(short returnCode, string message)
     {
-        Debug.Log("Oda kurulmdaý");
+        Debug.Log("Oda kurulmadý");
     }
-
-
 }

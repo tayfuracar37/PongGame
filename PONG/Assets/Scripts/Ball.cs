@@ -34,10 +34,10 @@ public class Ball : MonoBehaviour
 
     private void Update()
     {
-        if (gameStarted && !gameEnded)
+        if (PhotonNetwork.PlayerList.Length == 2)
         {
             countdown -= Time.deltaTime;
-            Timer_Text.text = "Time: " + Mathf.Ceil(countdown).ToString();
+            Timer_Text.text = "zaman: " + Mathf.Ceil(countdown).ToString();
 
             if (countdown <= 0)
             {

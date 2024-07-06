@@ -48,8 +48,8 @@ public class Manage : MonoBehaviourPunCallbacks
     {
         Debug.Log("Odaya girildi");
 
-        GameObject Oyuncu = PhotonNetwork.Instantiate("Square", Vector3.zero, Quaternion.identity, 0, null);
-        Player = Oyuncu;
+      //  GameObject Oyuncu = PhotonNetwork.Instantiate("Square", Vector3.zero, Quaternion.identity, 0, null);
+      //  Player = Oyuncu;
 
 
 

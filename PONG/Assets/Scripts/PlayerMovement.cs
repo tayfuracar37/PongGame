@@ -72,4 +72,15 @@ public class PlayerMovement : MonoBehaviour
     {
         Hareket();
     }
+
+
+
+
+    [PunRPC]
+    public void oyuncu_kacti()
+    {
+        InvokeRepeating("OyuncuKontrol", 0, 0.5f);
+        yazi_text.text = "Oyuncu Bekleniyor...";
+        GameObject.FindWithTag("Top").GetComponent<PhotonView>().RPC("OyuncuKacti", RpcTarget.All, null);
+    }
 }

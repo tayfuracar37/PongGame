@@ -4,10 +4,11 @@ using UnityEngine;
 using Photon.Pun;
 using Photon.Realtime;
 using Photon.Chat;
-
+using UnityEngine.SceneManagement;
 public class Manage : MonoBehaviourPunCallbacks
 {
 
+    static Manage manage = null;
     
 
 
@@ -29,6 +30,19 @@ public class Manage : MonoBehaviourPunCallbacks
 
     private void Start()
     {
+        if (manage == null)
+        {
+            manage = this;
+            DontDestroyOnLoad(this.gameObject);
+        }
+        else
+        {
+            Destroy(this.gameObject);
+        }
+
+
+
+
         PhotonNetwork.ConnectUsingSettings();
     }
 
@@ -38,22 +52,27 @@ public class Manage : MonoBehaviourPunCallbacks
         PhotonNetwork.JoinLobby();
     }
 
-    public override void OnJoinedLobby()
+  /* public override void OnJoinedLobby()
     {
         Debug.Log("Lobiye Girildi");
-        PhotonNetwork.JoinOrCreateRoom("Oda", new RoomOptions { MaxPlayers = 2, IsOpen = true, IsVisible = true }, TypedLobby.Default);
-    }
+       PhotonNetwork.JoinOrCreateRoom("Oda", new RoomOptions { MaxPlayers = 2, IsOpen = true, IsVisible = true }, TypedLobby.Default);
+    }*/
 
     public override void OnJoinedRoom()
     {
         Debug.Log("Odaya girildi");
 
        GameObject Oyuncu = PhotonNetwork.Instantiate("Player", new Vector2(7,0), Quaternion.identity, 0, null);
+        Oyuncu.GetComponent<PhotonView>().Owner.NickName = Random.Range(1, 100) + "misafir";
       
-
-
-
      
+    }
+
+
+
+    public override void OnPlayerLeftRoom(Player otherPlayer)
+    {
+        GameObject.FindWithTag("Player").GetComponent<PhotonView>().RPC("oyuncu_kacti", RpcTarget.All,null);
     }
 
     public override void OnLeftLobby()
@@ -63,7 +82,7 @@ public class Manage : MonoBehaviourPunCallbacks
 
     public override void OnLeftRoom()
     {
-        Debug.Log("Odadan Çýkýldý");
+        SceneManager.LoadScene("Menu");
     }
 
     public override void OnJoinRandomFailed(short returnCode, string message)
@@ -80,4 +99,6 @@ public class Manage : MonoBehaviourPunCallbacks
     {
         Debug.Log("Oda kurulmadý");
     }
+
+
 }

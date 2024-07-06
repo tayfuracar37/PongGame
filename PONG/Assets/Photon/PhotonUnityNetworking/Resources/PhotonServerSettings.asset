@@ -42,6 +42,8 @@ MonoBehaviour:
   - Basla
   - gol
   - yazisil
+  - oyuncu_kacti
+  - yazi_goster
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1

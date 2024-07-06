@@ -15,11 +15,51 @@ public class Ball : MonoBehaviour
 
     public TextMeshProUGUI Oyuncu1_Text;
     public TextMeshProUGUI Oyuncu2_Text;
+    public TextMeshProUGUI Timer_Text;
+
+    private float countdown = 90f;
+    private bool gameStarted = false;
+    private bool gameEnded = false;
 
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         photonView = GetComponent<PhotonView>();
+
+        if (PhotonNetwork.PlayerList.Length == 2)
+        {
+            photonView.RPC("StartGame", RpcTarget.AllBuffered);
+        }
+    }
+
+    private void Update()
+    {
+        if (gameStarted && !gameEnded)
+        {
+            countdown -= Time.deltaTime;
+            Timer_Text.text = "Time: " + Mathf.Ceil(countdown).ToString();
+
+            if (countdown <= 0)
+            {
+                photonView.RPC("EndGame", RpcTarget.AllBuffered);
+            }
+        }
+    }
+
+    [PunRPC]
+    public void StartGame()
+    {
+        gameStarted = true;
+        Basla();
+    }
+
+    [PunRPC]
+    public void EndGame()
+    {
+        gameEnded = true;
+        rb.velocity = Vector2.zero;
+        Timer_Text.text = "Game Over";
+       
     }
 
     [PunRPC]

@@ -4,6 +4,7 @@ using UnityEngine;
 using TMPro;
 using Photon.Pun;
 using Photon.Realtime;
+using UnityEngine.SceneManagement;
 
 public class ButtonManager : MonoBehaviour
 {
@@ -17,11 +18,12 @@ public class ButtonManager : MonoBehaviour
     public void Lobi()
     {
         PhotonNetwork.LeaveLobby();
+        SceneManager.LoadScene("Menu");
     }
 
-    public void yazi_gonder(string mesaj)
+    public void yazi_gonder()
     {
-        icerikText.text = mesaj;
+        string mesaj = icerik_text_input.text;
         pw.RPC("yazi_goster", RpcTarget.All,mesaj);
 
         icerik_text_input.text = null;

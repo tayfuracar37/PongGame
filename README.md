@@ -1,0 +1,2 @@
+Karşılaşılan zorluklar: Photon ve kütüphanesini bilmediğim için bazen yanlış fonksiyonları çağırdım ve iki oyuncunun servere veri alıp vermesi noktasında kafa karışıklığı yaşadım.
+Uygulanan Çözümler:Kodları ve kütühanenin içinde bulunan methodları inceleyip hangi parametleri aldıklarına ve ne döndürdüklerine baktım ardından yapabildiiğim kadarını kendim yapıp geri kalan noktalarda önerilen kaynaklara bakıp photonun genel işleyişini anladım
